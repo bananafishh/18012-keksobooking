@@ -57,7 +57,8 @@ var photos = [
 var map = document.querySelector('.map');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-
+var cardTemplateFeatures = cardTemplate.querySelector('.popup__features');
+var cardTemplatePhotos = cardTemplate.querySelector('.popup__photos');
 
 var getRandomValue = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -195,8 +196,6 @@ var createPin = function (adItem) {
 
 var createCard = function (adItem) {
   var card = cardTemplate.cloneNode(true);
-  var cardFeatures = card.querySelector('.popup__features');
-  var cardPhotos = card.querySelector('.popup__photos');
 
   card.querySelector('.popup__avatar').src = adItem.author.avatar;
   card.querySelector('.popup__title').textContent = adItem.offer.title;
@@ -206,12 +205,8 @@ var createCard = function (adItem) {
   card.querySelector('.popup__text--capacity').textContent = adItem.offer.rooms + ' комнаты для ' + adItem.offer.guests + ' гостей';
   card.querySelector('.popup__text--time').textContent = 'Заезд после ' + adItem.offer.checkin + ', выезд до ' + adItem.offer.checkout;
   card.querySelector('.popup__description').textContent = adItem.offer.description;
-
-  removeElements(cardFeatures);
-  cardFeatures.appendChild(getFeaturesFragment(adItem.offer.features));
-
-  removeElements(cardPhotos);
-  cardPhotos.appendChild(getPhotosFragment(adItem.offer.photos));
+  card.querySelector('.popup__features').appendChild(getFeaturesFragment(adItem.offer.features));
+  card.querySelector('.popup__photos').appendChild(getPhotosFragment(adItem.offer.photos));
 
   return card;
 };
@@ -236,6 +231,8 @@ var renderPins = function () {
 var renderCard = function () {
   var mapFilters = map.querySelector('.map__filters-container');
 
+  removeElements(cardTemplateFeatures);
+  removeElements(cardTemplatePhotos);
   map.insertBefore(getElementsFragment(adsList, 1, createCard), mapFilters);
 };
 
