@@ -73,9 +73,9 @@ var getRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-var getRandomArray = function (arr) {
+var getRandomArray = function (arr, min, max) {
   var randomArray = [];
-  var randomLength = getRandomNumber(1, arr.length);
+  var randomLength = getRandomNumber(min, max);
 
   for (var i = 0; i < randomLength; i++) {
     randomArray.push(arr[i]);
@@ -135,7 +135,7 @@ var getAdsList = function () {
         guests: getRandomNumber(AD_ROOMS_MIN, AD_ROOMS_MAX),
         checkin: getRandomValue(checkinTimes),
         checkout: getRandomValue(checkinTimes),
-        features: getRandomArray(features),
+        features: getRandomArray(features, 1, features.length),
         description: '',
         photos: shuffleArray(photos)
       },
